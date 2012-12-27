@@ -1,0 +1,11 @@
+Fabric
+Flask
+Flask-SQLAlchemy
+Jinja2
+SQLAlchemy
+Werkzeug
+distribute
+pycrypto
+ssh
+wsgiref
+yolk
