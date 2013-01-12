@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% for key in gists%}
+        <p>{{ key }}: </p>
+    {% endfor %}
+
+{% endblock %}

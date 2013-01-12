@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% for key, vlaue in user.items() recursive %}
+        <p>{{ key }}: {{ user[key] }}</p>
+    {% endfor %}
+
+{% endblock %}
