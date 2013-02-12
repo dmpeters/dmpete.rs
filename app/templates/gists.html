@@ -2,8 +2,8 @@
 
 {% block content %}
 
-    {% for key in gists%}
-        <p>{{ key }}: </p>
+    {% for key, vlaue in gists.items() recursive %}
+        <p>{{ key }}: {{ gists[key] }}</p>
     {% endfor %}
 
 {% endblock %}

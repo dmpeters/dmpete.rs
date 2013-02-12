@@ -52,8 +52,30 @@ def index():
 
 @app.route("/gists")
 def gists():
-    obj = requests.get('https://api.github.com/users/gists/'+GITHUB_USERNAME)
-    return render_template('gists.html', gists=obj.json())
+    gists_dict = {}
+    gists = []
+
+    obj = requests.get('https://api.github.com/users/'+ GITHUB_USERNAME +'/gists')
+    obj_dict = obj.json()
+
+    fields = ['id',
+              'html_url',
+              'files',
+              'created_at',
+              'updated_at',
+              'description',
+              'comments',
+          ]
+
+    for gist in obj_dict:
+        for key in fields:
+            if key in gist:
+                gists_dict[key] = gist[key]
+        gists.append(gists_dict)
+
+    import pdb; pdb.set_trace()
+
+    return render_template('gists.html', gists=gists)
 
 
 if __name__ == "__main__":
