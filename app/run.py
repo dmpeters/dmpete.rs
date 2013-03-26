@@ -27,10 +27,11 @@ toolbar = DebugToolbarExtension(app)
 # routes
 @app.route("/")
 def index():
-    me = {}
 
-    obj = requests.get('https://api.github.com/users/'+GITHUB_USERNAME)
-    obj_dict = obj.json()
+    # github
+    me = {}
+    github = requests.get('https://api.github.com/users/'+GITHUB_USERNAME)
+    github_dict = github.json()
 
     fields = ['bio',
               'hireable',
@@ -44,19 +45,14 @@ def index():
               ]
 
     for key in fields:
-        if key in obj_dict:
-            me[key] = obj_dict[key]
+        if key in github_dict:
+            me[key] = github_dict[key]
 
-    return render_template('index.html', user=me)
-
-
-@app.route("/gists")
-def gists():
+    # gists
     gists_dict = {}
     gists = []
-
-    obj = requests.get('https://api.github.com/users/'+ GITHUB_USERNAME +'/gists')
-    obj_dict = obj.json()
+    gist_objs = requests.get('https://api.github.com/users/'+ GITHUB_USERNAME +'/gists')
+    gist_dict = gist_objs.json()
 
     fields = ['id',
               'html_url',
@@ -65,9 +61,9 @@ def gists():
               'updated_at',
               'description',
               'comments',
-          ]
+              ]
 
-    for gist in obj_dict:
+    for gist in gist_dict:
         for key in fields:
             if key in gist:
                 gists_dict[key] = gist[key]
@@ -76,6 +72,7 @@ def gists():
     import pdb; pdb.set_trace()
 
     return render_template('gists.html', gists=gists)
+    return render_template('index.html', user=me)
 
 
 if __name__ == "__main__":
