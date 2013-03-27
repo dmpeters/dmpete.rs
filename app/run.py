@@ -1,6 +1,7 @@
 import requests
+# import simplejson as json
 
-from flask import Flask, render_template
+from flask import Flask, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
 # flask apps to consider:
@@ -22,6 +23,8 @@ app.config['SECRET_KEY'] = 'asd'
 app.config['DEBUG'] = True
 
 toolbar = DebugToolbarExtension(app)
+
+app = Flask(__name__)
 
 
 # routes
@@ -71,11 +74,15 @@ def index():
                 gists_dict[key] = gist[key]
         gists.append(gists_dict)
 
-
     obj.update({'github': me})
     obj.update({'gists': gists})
 
-    return render_template('index.html', obj=obj)
+    import pdb; pdb.set_trace()
+
+    if len(me) < 1:
+        return jsonify(obj=github['message'])
+    else:
+        return jsonify(obj=obj)
 
 
 if __name__ == "__main__":
