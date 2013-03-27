@@ -2,8 +2,8 @@
 
 {% block content %}
 
-    {% for key, vlaue in user.items() recursive %}
-        <p>{{ key }}: {{ user[key] }}</p>
+    {% for key, vlaue in obj.items() recursive %}
+        <p>{{ key }}: {{ obj[key] }}</p>
     {% endfor %}
 
 {% endblock %}
