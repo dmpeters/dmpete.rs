@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-
-{% block content %}
-
-    {% for key, vlaue in gists.items() recursive %}
-        <p>{{ key }}: {{ gists[key] }}</p>
-    {% endfor %}
-
-{% endblock %}
