@@ -1,18 +1,15 @@
 import requests
-# import simplejson as json
 
-from flask import Flask, jsonify
+from flask import Flask, render_template, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 
+
 # flask apps to consider:
-#   - flask-sqlalchemy > orm
-#   - flask-peewee > orm
 #   - flask-cache
 #   - flask-celery > tasks (get new data & flush cache)
-#   - forzen-flask > freeze into static site?
 #   - flask-lesscss > less
 #   - flask-testing
-#   - flask-heroku
+#   - highlight.js (highlight syntax)
 
 
 # settings
@@ -29,7 +26,12 @@ app = Flask(__name__)
 
 # routes
 @app.route("/")
-def index():
+def imdex():
+    return render_template('index.html')
+
+
+@app.route("/github")
+def github():
     # obj that gets passed to my template
     obj = {}
 
@@ -55,7 +57,7 @@ def index():
 
     # gists
     gists = []
-    gist_objs = requests.get('https://api.github.com/users/'+ GITHUB_USERNAME +'/gists')
+    gist_objs = requests.get('https://api.github.com/users/' + GITHUB_USERNAME + '/gists')
     gist_response = gist_objs.json()
 
     fields = ['id',
@@ -77,12 +79,20 @@ def index():
     obj.update({'github': me})
     obj.update({'gists': gists})
 
-    import pdb; pdb.set_trace()
-
     if len(me) < 1:
         return jsonify(obj=github['message'])
     else:
         return jsonify(obj=obj)
+
+
+@app.route("/linkedin")
+def linkedin():
+    return jsonify(obj='obj')
+
+
+@app.route("/twitter")
+def twitter():
+    return jsonify(obj='obj')
 
 
 if __name__ == "__main__":
