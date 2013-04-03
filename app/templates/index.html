@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <p>hello</p>
+    <div data-fragment-json="{{ url_for('static', filename='github.js') }}">
+
+    </div>
 {% endblock %}
