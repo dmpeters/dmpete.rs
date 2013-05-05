@@ -1,99 +1,30 @@
 import requests
+from bottle import error, route, run, static_file, template 
 
-from flask import Flask, render_template, jsonify
-from flask_debugtoolbar import DebugToolbarExtension
-
-
-# flask apps to consider:
-#   - flask-cache
-#   - flask-celery > tasks (get new data & flush cache)
-#   - flask-lesscss > less
-#   - flask-testing
+# shit to consider:
+#	- cache shit
 #   - highlight.js (highlight syntax)
 
 
-# settings
-GITHUB_USERNAME = 'dmpeters'
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'asd'
-app.config['DEBUG'] = True
-
-toolbar = DebugToolbarExtension(app)
-
-app = Flask(__name__)
-
-
 # routes
-@app.route("/")
-def imdex():
-    return render_template('index.html')
+@route("/")
+def index():
+    return template('index')
 
 
-@app.route("/github")
-def github():
-    # obj that gets passed to my template
-    obj = {}
-
-    # github
-    me = {}
-    github = requests.get('https://api.github.com/users/'+GITHUB_USERNAME)
-    github_response = github.json()
-
-    fields = ['bio',
-              'hireable',
-              'id',
-              'blog',
-              'public_repos',
-              'company',
-              'public_gists',
-              'name',
-              'login'
-              ]
-
-    for key in fields:
-        if key in github_response:
-            me[key] = github_response[key]
-
-    # gists
-    gists = []
-    gist_objs = requests.get('https://api.github.com/users/' + GITHUB_USERNAME + '/gists')
-    gist_response = gist_objs.json()
-
-    fields = ['id',
-              'html_url',
-              'created_at',
-              'updated_at',
-              'description',
-              'comments',
-              ]
-
-    for gist in gist_response:
-        gists_dict = {}
-
-        for key in fields:
-            if key in gist:
-                gists_dict[key] = gist[key]
-        gists.append(gists_dict)
-
-    obj.update({'github': me})
-    obj.update({'gists': gists})
-
-    if len(me) < 1:
-        return jsonify(obj=github['message'])
-    else:
-        return jsonify(obj=obj)
+@error(403)
+def mistake403(code):
+    return 'The parameter you passed has the wrong format!'
 
 
-@app.route("/linkedin")
-def linkedin():
-    return jsonify(obj='obj')
+@error(404)
+def mistake404(code):
+    return 'Sorry, this page does not exist!'
 
 
-@app.route("/twitter")
-def twitter():
-    return jsonify(obj='obj')
+@error(500)
+def mistake500(code):
+    return 'GFY!'
 
 
-if __name__ == "__main__":
-    app.run()
+run(reloader=True)
