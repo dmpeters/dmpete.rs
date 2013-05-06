@@ -5,11 +5,10 @@
     <meta name="keywords" content="dmpeters, dmpete.rs, _dmpeters, david peters, david m peters, dave peters, dave, david, peters">
     <meta name="author" content="david peters">
     <meta charset="utf-8">
+    <link rel="stylesheet" title="Ascetic" href="reset.css">
     <link rel="stylesheet" title="Ascetic" href="ascetic.css">
-    <!-- <link rel="stylesheet" title="Tomorrow Night" href="tomorrow-night.css"> -->
     <style>
-        body {font: small Arial, sans-serif; border-top: 3px solid black; margin: 0px; padding: 0px;}
-        #page {margin: 50px 0;}
+        body {font: small Arial, sans-serif; border-top: 3px solid black;}
         header {padding-left: 100px;}
         h2 {font: bold 100% Arial, sans-serif; margin-top: 2em; margin-bottom: 0.5em;}
         ul {margin: 0; padding: 0;}
@@ -38,22 +37,13 @@
 
         <section>
             <div id="json">
-                <pre>
-                    <code>
-                        [
-                          {
-                            "title": "apples",
-                            "count": [12000, 20000],
-                            "description": {"text": "...", "sensitive": false}
-                          },
-                          {
-                            "title": "oranges",
-                            "count": [17500, null],
-                            "description": {"text": "...", "sensitive": false}
-                          }
-                        ]
-                    </code>
-                </pre>
+            <pre><code>
+            {
+              %for o in obj:
+              "{{o}}": "{{obj[o]}}",
+              %end
+            }
+            </code></pre>
             </div>
         </section>
 

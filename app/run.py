@@ -1,16 +1,39 @@
 import requests
-from bottle import error, get, route, run, static_file, template 
+from collections import OrderedDict
+from bottle import error, get, route, run, static_file, template, debug
 
 # shit to consider:
 #	- cache shit
 #   - highlight.js (highlight syntax)
 
+# settings
+GITHUB_USERNAME = 'dmpeters'
 
 # routes
 @route('/')
 def index():
-    return template('index')
+    # github
+    me = {}
+    github = requests.get('https://api.github.com/users/'+GITHUB_USERNAME)
+    response = github.json()
 
+    fields = ['blog',
+              'login',
+              'name',
+              'company',
+              'hireable',
+              'public_repos',
+              'public_gists'
+             ]
+
+    for key in fields:
+        if key in response:
+            me[key] = response[key]
+
+    obj = OrderedDict(sorted(me.items()))
+
+    json = template('index', obj=obj)
+    return json
 
 # static
 @get('/<file:re:.*\.js>')
@@ -41,4 +64,5 @@ def mistake500(code):
 
 
 # run
+debug(True)
 run(reloader=True)
