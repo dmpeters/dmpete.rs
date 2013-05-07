@@ -64,5 +64,5 @@ def mistake500(code):
 
 
 # run
-debug(True)
+# debug(True)
 run(reloader=True)
