@@ -1,28 +1,16 @@
 import requests
-from bottle import route
+import redis
 
 
 # settings
 GITHUB_USERNAME = 'dmpeters'
 
 
-@route('/github')
 def github():
-    # github
     me = {}
     github = requests.get('https://api.github.com/users/'+GITHUB_USERNAME)
     response = github.json()
-
-    fields = ['bio',
-              'hireable',
-              'blog',
-              'public_repos',
-              'company',
-              'public_gists',
-              'name',
-              'login'
-              ]
-
+    fields = ['company', 'hireable', 'name', 'public_gists', 'public_repos']
     for key in fields:
         if key in response:
             me[key] = response[key]
@@ -30,23 +18,14 @@ def github():
     if not response:
         return {'github':'no es bueno!'}
     else:
-        return {'Task': me}
+        return {'github': me}
 
-
-@route('/gists')
-def github():
+def gists():
     # gists
     gists = []
     gist = requests.get('https://api.github.com/users/' + GITHUB_USERNAME + '/gists')
     response = gist.json()
-
-    fields = ['id',
-              'html_url',
-              'created_at',
-              'updated_at',
-              'description',
-              'comments',
-              ]
+    fields = ['id', 'html_url', 'created_at', 'updated_at', 'description', 'comments']
 
     for gist in response:
         gists_dict = {}

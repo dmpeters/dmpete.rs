@@ -26,12 +26,12 @@
         <header>
             <h2>dmpete.rs</h2>
             <nav>
-<!--                 <ul id="nav">
-                    <li>[<a href="#">github</a>,</li>
-                    <li><a href="#">linkedin</a>,</li>
-                    <li><a href="#">twitter</a>,</li>
-                    <li><a href="mailto:dmpeters63@gmail.com">gmail</a>]</li>
-                </ul> -->
+                <ul id="nav">
+                    <li>[<a href="#">about</a>,</li>
+                    <li><a href="https://github.com/dmpeters">github</a>,</li>
+                    <li><a href="http://www.linkedin.com/in/dmpeters">linkedin</a>,</li>
+                    <li><a href="mailto:dmpeters63@gmail.com">contact</a>]</li>
+                </ul>
             </nav>
         </header>
 
